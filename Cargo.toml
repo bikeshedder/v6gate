@@ -7,14 +7,21 @@ author = "Michael P. Jung <michael.jung@terreon.de>"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.75"
 clap = { version = "4.4.7", features = ["derive"] }
 config = "0.13.3"
 futures = "0.3.28"
+instant-acme = "0.4.1"
+itertools = "0.12.0"
 netlink-packet-core = "0.7.0"
 netlink-packet-route = "0.17.1"
 netlink-sys = "0.8.5"
+rcgen = "0.11.3"
 reqwest = { version = "0.11.22", features = ["rustls-tls"], default-features = false }
 rtnetlink = "0.13.1"
 serde = { version = "1.0.190", features = ["derive"] }
-tokio = { version = "1.33.0", features = ["macros", "rt-multi-thread", "sync"] }
+serde_json = "1.0.108"
+tokio = { version = "1.33.0", features = ["macros", "rt-multi-thread", "sync", "time"] }
 toml = "0.8.6"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }

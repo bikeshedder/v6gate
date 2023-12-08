@@ -6,11 +6,24 @@ use v6gate::duckdns::Address;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tracing_subscriber::fmt::init();
     let args = Args::parse();
+
+    let challenges = v6gate::acme::start_order(&args.domains).await?;
+    for challenge in &challenges.challenges {
+        let duckdns = v6gate::duckdns::Duckdns {
+            domains: challenge.domain.clone(),
+            token: args.duckdns_token.clone(),
+        };
+        duckdns.txt(Some(&challenge.txt)).await?;
+    }
+    let cert = v6gate::acme::complete_order(challenges).await?;
+    println!("{:?}", cert);
+
     // Open the netlink socket
     let mut addr_watch = watch_ipv6addr(&args.dev)?;
     let duckdns = v6gate::duckdns::Duckdns {
-        domains: args.domains.clone(),
+        domains: args.domains.join(","),
         token: args.duckdns_token.clone(),
     };
     loop {

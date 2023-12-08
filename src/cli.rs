@@ -7,7 +7,7 @@ pub struct Args {
     #[arg(long)]
     pub dev: String,
     #[arg(long)]
-    pub domains: String,
-    #[arg(long)]
     pub duckdns_token: String,
+    #[arg(required = true)]
+    pub domains: Vec<String>,
 }
