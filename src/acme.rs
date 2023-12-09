@@ -9,11 +9,7 @@ use rcgen::{CertificateParams, DistinguishedName};
 use tokio::time::sleep;
 use tracing::{error, info};
 
-#[derive(Debug)]
-pub struct Certificate {
-    pub private_key: String,
-    pub chain: String,
-}
+use crate::tls::Certificate;
 
 pub struct Challenges {
     order: Order,
@@ -150,7 +146,7 @@ pub async fn complete_order(
     info!("private key:\n\n{}", cert.serialize_private_key_pem());
 
     Ok(Certificate {
-        private_key: cert.serialize_private_key_pem(),
+        privkey: cert.serialize_private_key_pem(),
         chain: cert_chain_pem,
     })
 }
